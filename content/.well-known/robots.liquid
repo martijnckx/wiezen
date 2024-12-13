@@ -1,0 +1,9 @@
+---
+permalink: /robots.txt
+eleventyExcludeFromCollections: true
+---
+{%- assertIsNotEmpty site.host "Site host is needed for robots.txt" -%}
+Sitemap: https://{{ site.host -}}/sitemap.xml
+
+User-agent: *
+Disallow:

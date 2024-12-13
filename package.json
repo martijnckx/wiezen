@@ -1,0 +1,24 @@
+{
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-img": "^5.0.0",
+    "@11ty/eleventy-navigation": "^0.3.5",
+    "@bookshop/browser": "3.11.0",
+    "@bookshop/eleventy-engine": "3.11.0",
+    "@bookshop/generate": "3.11.0",
+    "@mightyplow/eleventy-plugin-cache-buster": "^1.1.3",
+    "markdown-it-eleventy-img": "^0.10.2",
+    "wrangler": "^3.83.0"
+  },
+  "scripts": {
+    "clean": "rm -rf _site",
+    "copy-assets": "mkdir -p _site && cp -r public/* _site/",
+    "dev": "npm run clean && npm run copy-assets && npx @11ty/eleventy --port 8000 --serve",
+    "build": "npm run copy-assets && npx @11ty/eleventy",
+    "cf": "npm run clean && npm run build && awk -F'=' '{print \"-b \"$1\"=\"$2}' .env | tr '\n' ' ' | xargs npx wrangler pages dev _site --port 8000"
+  },
+  "dependencies": {
+    "@bookshop/eleventy-bookshop": "3.9.0",
+    "dotenv": "^16.4.5"
+  }
+}

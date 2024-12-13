@@ -1,0 +1,10 @@
+---
+permalink: /.well-known/security.txt
+eleventyExcludeFromCollections: true
+---
+{%- assertIsNotEmpty site.author.email "Author email is needed for security.txt" -%}
+{%- assign current_year = "now" | date: "%Y" -%}
+{%- assign next_year = current_year | plus: 1 -%}
+Contact: mailto:{{- site.author.email }}
+Expires: {{ next_year -}}-12-31T23:01:00.000Z
+Preferred-Languages: en, nl

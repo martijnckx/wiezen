@@ -1,0 +1,13 @@
+# humans.txt
+
+[The humans responsible & technology colophon](http://humanstxt.org/)
+
+*This file is valid markdown.*
+
+## TEAM
+
+This website was built by [CKX](https://ckx.be). The team includes:
+
+- [Martijn Luyckx](https://martijnluyckx.be/)
+- [Marlies Hendrickx](https://woordevol.be/)
+- [Robbe Luyckx](https://robbeluyckx.be/)
