@@ -15,7 +15,14 @@
 </head>
 
 <body>
-    {{ content }}
+    <header>
+        <img src="/images/logo.png" alt="{{ site.name }}">
+        <h1>{{ site.name }}</h1>
+    </header>
+    <main>
+        {{ content }}
+    </main>
+    <script src="/assets/game.js"></script>
 </body>
 
 </html>

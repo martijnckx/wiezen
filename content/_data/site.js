@@ -1,4 +1,4 @@
-module.exports = function () {
+export default function () {
     return {
         "name": process.env.SITE_NAME || "",
         "metaTitleSuffix": process.env.SITE_META_TITLE_SUFFIX || process.env.SITE_NAME || "",
