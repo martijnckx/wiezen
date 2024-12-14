@@ -1,0 +1,74 @@
+---
+layout: layouts/base
+---
+
+<section>
+    <h2>Grafiek</h2>
+    <p>Coming soon &hellip;</p>
+</section>
+
+<section>
+    <h2>Tabel</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Speler 1</th>
+                <th>Speler 2</th>
+                <th>Speler 3</th>
+                <th>Speler 4</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Acties</h2>
+    <button onclick="game.removeLastRound()">Verwijder meest recente spel</button>
+</section>
+
+<script>
+    function totalInRound(roundNumber, history) {
+        return history.slice(roundNumber).reduce((total, round) => total + round, 0);
+    }
+    function updateTable() {
+        const tableElement = document.querySelector('table');
+            tableElement.innerHTML = `<thead>
+                <tr>
+                    <th></th>
+                    <th>${game.players[0].name}</th>
+                    <th>${game.players[1].name}</th>
+                    <th>${game.players[2].name}</th>
+                    <th>${game.players[3].name}</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${game.rounds.length > 0 ? game.rounds.slice().reverse().map((round, index) => `<tr>
+                    <td>${round}</td>
+                    <td>${totalInRound(index, game.players[0].history.slice().reverse())}</td>
+                    <td>${totalInRound(index, game.players[1].history.slice().reverse())}</td>
+                    <td>${totalInRound(index, game.players[2].history.slice().reverse())}</td>
+                    <td>${totalInRound(index, game.players[3].history.slice().reverse())}</td>
+                </tr>`).join('') : `
+                    <tr>
+                        <td></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                `}
+            </tbody>`;
+    }
+    window.addEventListener('load', () => {
+        updateTable();
+        game.onChange(updateTable);
+    });
+</script>

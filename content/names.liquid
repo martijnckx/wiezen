@@ -1,0 +1,71 @@
+---
+layout: layouts/base
+---
+
+<div class="names">
+    <div class="rows">
+        <div>
+            <div class="key">Speler 1</div>
+            <div class="value">
+                <div class="name">Speler 1</div>
+                <div class="actions">
+                    <button onclick="editName(0)"><img src="/assets/icons/pencil.svg" alt="Bewerken"></button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="key">Speler 2</div>
+            <div class="value">
+                <div class="name">Speler 2</div>
+                <div class="actions">
+                    <button onclick="editName(1)"><img src="/assets/icons/pencil.svg" alt="Bewerken"></button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="key">Speler 3</div>
+            <div class="value">
+                <div class="name">Speler 3</div>
+                <div class="actions">
+                    <button onclick="editName(2)"><img src="/assets/icons/pencil.svg" alt="Bewerken"></button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="key">Speler 4</div>
+            <div class="value">
+                <div class="name">Speler 4</div>
+                <div class="actions">
+                    <button onclick="editName(3)"><img src="/assets/icons/pencil.svg" alt="Bewerken"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateNames() {
+        const rows = document.querySelector('.names .rows');
+        Array.from(rows.children).forEach((row, index) => {
+            row.innerHTML = `
+                <div class="key">Speler ${index + 1}</div>
+                <div class="value">
+                    <div class="name">${game.players[index].name}</div>
+                    <div class="actions">
+                        <button onclick="editName(${index})"><img src="/assets/icons/pencil.svg" alt="Bewerken"></button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+    function editName(index) {
+        const newName = prompt(`Nieuwe naam voor speler ${index + 1}${ game.players[index].name === `Speler ${index + 1}` ? '' : ` (${game.players[index].name})`}:`);
+        if (newName) {
+            game.players[index].name = newName;
+        }
+    }
+    window.addEventListener('load', () => {
+        updateNames();
+        game.onChange(updateNames);
+    });
+</script>

@@ -1,0 +1,391 @@
+@font-face{
+    font-family: "MrAlex-Bold";
+    src: url("/assets/fonts/mralex/807d127782fb61e67d044d13ad7adce9.eot");
+    src: url("/assets/fonts/mralex/807d127782fb61e67d044d13ad7adce9.eot?#iefix")format("embedded-opentype"),
+        url("/assets/fonts/mralex/807d127782fb61e67d044d13ad7adce9.woff")format("woff"),
+        url("/assets/fonts/mralex/807d127782fb61e67d044d13ad7adce9.woff2")format("woff2"),
+        url("/assets/fonts/mralex/807d127782fb61e67d044d13ad7adce9.ttf")format("truetype"),
+        url("/assets/fonts/mralex/807d127782fb61e67d044d13ad7adce9.svg#MrAlex-Bold")format("svg");
+    font-weight:normal;
+    font-style:normal;
+    font-display:swap;
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("/assets/fonts/opensans/OpenSans-VariableFont_wdth\,wght.ttf") format("truetype-variations");
+    font-weight: 100 1000;
+    font-stretch: 75% 100%;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --text-color: #D8D8D8;
+    --focus-color: white;
+    --accent-color: #CD0300;
+    --success-color: #5E7461;
+    --accent-color-hover: #A40300;
+    --background-color: black;
+    --border-color: #555555;
+    --border-radius: 3px;
+    --font-family: "Open Sans", sans-serif;
+}
+
+
+body, html {
+    padding: 0;
+    margin: 0;
+    background: #3C3C3C;
+    font-family: var(--font-family);
+    font-size: 16px;
+}
+
+.container {
+    margin: 0 auto;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--background-color);
+    color: var(--text-color);
+    max-width: 500px;
+    box-sizing: border-box;
+    position: relative;
+    padding-bottom: 4rem;
+    font-variant-numeric: tabular-nums;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    --font-family: "MrAlex-Bold", sans-serif;
+    font-family: var(--font-family);
+    text-transform: uppercase;
+    color: var(--focus-color);
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+h1 { font-size: 32px; }
+h2 { font-size: 28px; }
+h3 { font-size: 24px; }
+h4 { font-size: 20px; }
+h5 { font-size: 18px; }
+h6 { font-size: 16px; }
+
+a {
+    text-decoration: underline;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+a:hover {
+    color: var(--focus-color);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+header {
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+header .logo {
+    aspect-ratio: 1/1;
+    width: 70px;
+}
+
+section {
+    --background-color: #2A2A2A;
+    padding: 1.5rem;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+section button, section .button {
+    --background-color: var(--accent-color);
+    --text-color: var(--focus-color);
+
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: var(--border-radius);
+    padding: 1rem 1.5rem;
+    font-size: 14px;
+    font-family: var(--font-family);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-align: left;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out;
+    position: relative;
+    text-decoration: none;
+}
+
+section button:hover, section .button:hover {
+    background-color: var(--accent-color-hover);
+}
+
+section button::after, section .button::after {
+    content: "";
+    background-image: url("/assets/icons/arrow-right.svg");
+    background-size: contain;
+    display: inline-block;
+    background-position: center;
+    background-repeat: no-repeat;
+    aspect-ratio: 1/1;
+    width: 20px;
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: black;
+    font-weight: bold;
+}
+
+.rows {
+    display: flex;
+    flex-direction: column;
+}
+
+.rows > * {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+}
+
+.rows > *:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.players .score {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.players .score .history {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 12px;
+    align-items: center;
+    color: var(--accent-color);
+}
+
+.players .score .history span {
+    min-width: 3ch;
+    text-align: right;
+}
+
+.players .score .history .gain {
+    color: var(--success-color);
+}
+
+.players .score .history .gain::before {
+    content: "+";
+}
+.players .score .total {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 3ch;
+    text-align: right;
+}
+
+input, select, button, textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.field {
+    --background-color: #3F3F3F;
+    --border-color: #222222;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.field .required {
+    color: var(--accent-color);
+}
+
+.field input, .field select, .player-list label {
+    --background-color: #3F3F3F;
+    --border-color: #222222;
+    background-color: var(--background-color);
+    outline: 1px solid var(--border-color);
+    border: none;
+    color: var(--text-color);
+    padding: 1rem 1.5rem;
+    font-size: 14px;
+    color: var(--focus-color);
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+}
+
+.field:has(select)::after {
+    content: "";
+    background-image: url("/assets/icons/chevron-down.svg");
+    background-size: contain;
+    display: inline-block;
+    background-position: center;
+    background-repeat: no-repeat;
+    aspect-ratio: 1/1;
+    width: 12px;
+    position: absolute;
+    font-size: 50%;
+    right: 1.5rem;
+    top: 57px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.field input:focus-visible, .field select:focus-visible, section button:focus-visible {
+    outline: var(--focus-color) 1px solid;
+}
+
+footer {
+    opacity: 0.5;
+    padding: 1rem 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+/* Names page */
+
+.names {
+    --background-color: #2A2A2A;
+    background-color: var(--background-color);
+    padding: 0.5rem 1.5rem;
+}
+
+.names .key {
+    color: var(--focus-color);
+    font-weight: bold;
+}
+
+.names .value {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 14px;
+}
+
+.names .value .actions > * {
+    --background-color: #3F3F3F;
+    display: inline-block;
+    aspect-ratio: 1/1;
+    width: 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    background-color: var(--background-color);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.names .value .actions img {
+    width: 12px;
+}
+
+/* History page */
+
+table {
+    border-collapse: collapse;
+}
+
+tbody tr {
+    border-top: 1px solid var(--border-color);
+}
+
+th, td {
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+td:first-child {
+    font-size: 12px;
+}
+
+/* round pages */
+
+.player-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.player-item label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.player-item label.disabled {
+    opacity: 0.6;
+    background-image: repeating-linear-gradient(135deg,rgb(85, 85, 85),rgb(85, 85, 85) 10px,transparent 10px,transparent 20px);
+    cursor: not-allowed;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.player-item label:not(.disabled):hover {
+    background-color: #4a4a4a;
+}
+
+.player-item input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-custom {
+    aspect-ratio: 1/1;
+    width: 18px;
+    border-radius: 50%;
+    border: 1px solid var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-item input[type="checkbox"]:checked + .checkbox-custom {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.checkbox-custom::after {
+    content: "";
+    aspect-ratio: 1/1;
+    height: 16px;
+    background-image: url("/assets/icons/check.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none;
+}
+
+.player-item input[type="checkbox"]:checked + .checkbox-custom::after {
+    display: block;
+}

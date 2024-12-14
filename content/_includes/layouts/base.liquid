@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/style.css">
     <meta name="generator" content="{{ eleventy.generator }}">
+    <meta name="theme-color" content="#000000">
     {% include "socialMetaTags" %}
     {% assertIsNotEmpty site.host "Site host needed for canonical URLs" %}
     <link rel="canonical" href="https://{{- site.host -}}{{- page.url | url -}}" />
@@ -15,13 +17,18 @@
 </head>
 
 <body>
-    <header>
-        <img src="/images/logo.png" alt="{{ site.name }}">
-        <h1>{{ site.name }}</h1>
-    </header>
-    <main>
-        {{ content }}
-    </main>
+    <div class="container">
+        <header>
+            <a href="/"><img src="https://mobilevikings.be/static/img/logo-white.svg" alt="{{ site.name }}" class="logo"></a>
+            <h1>{{ site.name }}</h1>
+        </header>
+        <main>
+            {{ content }}
+        </main>
+        <footer>
+            <p> &copy; {{ "now" | date: '%Y' }} — Website door <a href="https://martijnluyckx.be">Martijn Luyckx</a> van <a href="https://ckx.be">CKX</a></p>
+        </footer>
+    </div>
     <script src="/assets/game.js"></script>
 </body>
 

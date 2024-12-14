@@ -1,0 +1,94 @@
+---
+layout: layouts/base
+---
+
+<section>
+    <h2>Nieuw spel</h2>
+    <div class="field">
+        <label for="round">Resultaat biedingen <span class="required">*</span></label>
+        <select name="round" id="round" required>
+            <option value="game.startRound('alleen')">Alleen gaan</option>
+            <option value="game.startRound('vragen')">Vragen en meegaan</option>
+            <option value="game.startRound('abondance9')">Abondance 9</option>
+            <option value="game.startRound('abondance10')">Abondance 10</option>
+            <option value="game.startRound('miserie')">Miserie</option>
+            <option value="game.startRound('abondance11')">Abondance 11</option>
+            <option value="game.startRound('abondance12')">Abondance 12</option>
+            <option value="game.startRound('troel')">Troel</option>
+            <option value="game.startRound('troela')">Troela</option>
+            <option value="game.startRound('openmiserie')">Open miserie</option>
+            <option value="game.startRound('solo')">Solo</option>
+            <option value="game.startRound('soloslim')">Solo slim</option>
+        </select>
+    </div>
+    <button>Start spel</button>
+</section>
+
+<section>
+    <h2>Scores</h2>
+    <div class="rows players">
+        <div>
+            <div class="name">Speler 1</div>
+            <div class="score">
+                <div class="history"></div>
+                <div class="total">0</div>
+            </div>
+        </div>
+        <div>
+            <div class="name">Speler 2</div>
+            <div class="score">
+                <div class="history"></div>
+                <div class="total">0</div>
+            </div>
+        </div>
+        <div>
+            <div class="name">Speler 3</div>
+            <div class="score">
+                <div class="history"></div>
+                <div class="total">0</div>
+            </div>
+        </div>
+        <div>
+            <div class="name">Speler 4</div>
+            <div class="score">
+                <div class="history"></div>
+                <div class="total">0</div>
+            </div>
+        </div>
+    </div>
+    <a class="button" href="/history/">Bekijk volledige geschiedenis</a>
+</section>
+
+<section>
+    <h2>Acties</h2>
+    <button>Stuur tussenstand naar Slack</button>
+    <a class="button" href="/names/">Pas namen aan</a>
+    <button onclick="resetScores()">Reset scores</button>
+</section>
+
+<script>
+    function updateScores() {
+        const rows = document.querySelector('.rows.players');
+        Array.from(rows.children).forEach((row, index) => {
+            row.innerHTML = `
+                <div class="name">${game.players[index].name}</div>
+                <div class="score">
+                    <div class="history">
+                        ${game.players[index].history.slice(-1).map(score => `<span class="${score > 0 ? 'gain' : 'loss'}">${score}</span>`).join('')}
+                    </div>
+                    <div class="total">${game.players[index].score}</div>
+                </div>
+            `;
+        });
+    }
+    function resetScores() {
+        if (!confirm('Weet je zeker dat je de scores wilt resetten?')) {
+            return;
+        }
+        game.reset();
+    }
+    window.addEventListener('load', () => {
+        updateScores();
+        game.onChange(updateScores);
+    });
+</script>
