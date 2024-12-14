@@ -7,8 +7,8 @@
   "scripts": {
     "clean": "rm -rf _site",
     "copy-assets": "mkdir -p _site && cp -r public/* _site/",
-    "dev": "npm run clean && npx @11ty/eleventy --port 8000 --serve",
-    "build": "npm run copy-assets && npx @11ty/eleventy",
+    "dev": "export ENVIRONMENT=development && npm run clean && npx @11ty/eleventy --port 8000 --serve",
+    "build": "npm run clean && npm run copy-assets && npx @11ty/eleventy",
     "cf": "npm run clean && npm run build && awk -F'=' '{print \"-b \"$1\"=\"$2}' .env | tr '\n' ' ' | xargs npx wrangler pages dev _site --port 8000"
   },
   "dependencies": {

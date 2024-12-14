@@ -1,0 +1,104 @@
+---
+layout: layouts/base
+pagination:
+    data: rounds
+    size: 1
+    alias: round
+    addAllPagesToCollections: true
+permalink: /add-round/{{ round.name | slugify }}/
+---
+
+<section>
+    <h2>{{ round.name}}</h2>
+    <div class="field">
+        <label for="names">Wie speelt er?<span class="required">*</span></label>
+    </div>
+    <div class="player-list" data-players="{{ round.amountOfPlayers }}">
+        <div class="player-item">
+            <label>
+                <input type="checkbox" name="player" value="0">
+                <span class="checkbox-custom"></span>
+                <span class="name" id="player0">Speler 1</span>
+            </label>
+        </div>
+        <div class="player-item">
+            <label>
+                <input type="checkbox" name="player" value="1">
+                <span class="checkbox-custom"></span>
+                <span class="name" id="player1">Speler 2</span>
+            </label>
+        </div>
+        <div class="player-item">
+            <label>
+                <input type="checkbox" name="player" value="2">
+                <span class="checkbox-custom"></span>
+                <span class="name" id="player2">Speler 3</span>
+            </label>
+        </div>
+        <div class="player-item">
+            <label>
+                <input type="checkbox" name="player" value="3">
+                <span class="checkbox-custom"></span>
+                <span class="name" id="player3">Speler 4</span>
+            </label>
+        </div>
+    </div>
+    <div class="field">
+        <label for="tricks">Hoeveel slagen haalde{% if round.amountOfPlayers > 1 %}n ze{% else %} <span id="name">de speler</span>{% endif %}?</label>
+        <select name="tricks" id="tricks">
+            {% for i in (0..13) %}
+                <option value="{{ i }}">{{ i }} {% if i == 1 %}slag{% else %}slagen{% endif %}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button>Punten toevoegen</button>
+</section>
+
+<script>
+    function updateNames() {
+        for (let i = 0; i < game.players.length; i++) {
+            document.getElementById(`player${i}`).innerText = game.players[i].name;
+        }
+    }
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const selectedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            const maxPlayers = parseInt(document.querySelector('.player-list').dataset.players);
+
+            if (selectedCount === 0 && maxPlayers === 1) {
+                const nameSpan = document.getElementById('name');
+                if (nameSpan) {
+                    nameSpan.innerText = 'de speler';
+                }
+            }
+
+            if (!this.checked && selectedCount >= maxPlayers) {
+                // Prevent selecting more than max players
+                this.checked = false;
+                return;
+            }
+
+            // Enable/disable checkboxes based on selection count
+            checkboxes.forEach(cb => {
+                if (cb.checked && maxPlayers === 1) {
+                    const nameSpan = document.getElementById('name');
+                    if (nameSpan) {
+                        nameSpan.innerText = game.players[cb.value].name;
+                    }
+                }
+                if (!cb.checked && selectedCount >= maxPlayers) {
+                    cb.disabled = true;
+                    cb.closest('label').classList.add('disabled');
+                } else {
+                    cb.disabled = false;
+                    cb.closest('label').classList.remove('disabled');
+                }
+            });
+        });
+    });
+    window.addEventListener('load', () => {
+        updateNames();
+        game.onChange(updateNames);
+    });
+</script>

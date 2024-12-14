@@ -7,21 +7,12 @@ layout: layouts/base
     <div class="field">
         <label for="round">Resultaat biedingen <span class="required">*</span></label>
         <select name="round" id="round" required>
-            <option value="game.startRound('alleen')">Alleen gaan</option>
-            <option value="game.startRound('vragen')">Vragen en meegaan</option>
-            <option value="game.startRound('abondance9')">Abondance 9</option>
-            <option value="game.startRound('abondance10')">Abondance 10</option>
-            <option value="game.startRound('miserie')">Miserie</option>
-            <option value="game.startRound('abondance11')">Abondance 11</option>
-            <option value="game.startRound('abondance12')">Abondance 12</option>
-            <option value="game.startRound('troel')">Troel</option>
-            <option value="game.startRound('troela')">Troela</option>
-            <option value="game.startRound('openmiserie')">Open miserie</option>
-            <option value="game.startRound('solo')">Solo</option>
-            <option value="game.startRound('soloslim')">Solo slim</option>
+            {% for round in rounds %}
+                <option value="{{ round.name | slugify }}">{{ round.name }}</option>
+            {% endfor %}
         </select>
     </div>
-    <button>Start spel</button>
+    <button onclick="window.location.href = `/add-round/${document.getElementById('round').value}/`">Start spel</button>
 </section>
 
 <section>
