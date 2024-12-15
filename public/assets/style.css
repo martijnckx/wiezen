@@ -50,8 +50,32 @@ body, html {
     max-width: 500px;
     box-sizing: border-box;
     position: relative;
-    padding-bottom: 4rem;
+    padding-bottom: 112px;
     font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 353px) {
+    .container {
+        padding-bottom: 134px;
+    }
+}
+
+@media (max-width: 346px) {
+    .container {
+        padding-bottom: 156px;
+    }
+}
+
+@media (max-width: 268px) {
+    .container {
+        padding-bottom: 177px;
+    }
+}
+
+@media (max-width: 231px) {
+    .container {
+        padding-bottom: 199px;
+    }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -280,12 +304,17 @@ input, select, button, textarea {
 
 footer {
     opacity: 0.5;
-    padding: 1rem 0;
+    padding: 1rem 1.5rem;
+    box-sizing: border-box;
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     bottom: 0;
     left: 0;
     width: 100%;
     text-align: center;
+    text-wrap-style: pretty;
 }
 
 /* Names page */
