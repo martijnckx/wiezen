@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/style.css">
     <meta name="generator" content="{{ eleventy.generator }}">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#022B4D">
     {% include "socialMetaTags" %}
     {% assertIsNotEmpty site.host "Site host needed for canonical URLs" %}
     <link rel="canonical" href="https://{{- site.host -}}{{- page.url | url -}}" />
@@ -17,10 +17,37 @@
 </head>
 
 <body>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const hasMvParam = urlParams.has('mv');
+        const hasMvCookie = document.cookie.split(';').some(item => item.trim().startsWith('mv='));
+
+        if (hasMvParam || hasMvCookie) {
+            const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+            metaThemeColor.setAttribute('content', '#000000');
+            document.body.classList.add('mv');
+            if (!hasMvCookie) {
+                const expiryDate = new Date();
+                expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+                document.cookie = `mv=true; expires=${expiryDate.toUTCString()}; path=/`;
+            }
+            if (hasMvParam) {
+                urlParams.delete('mv');
+                const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
+                window.history.replaceState({}, '', newUrl);
+            }
+        }
+    </script>
     <div class="container">
         <header>
-            <a href="/"><img src="https://mobilevikings.be/static/img/logo-white.svg" alt="{{ site.name }}" class="logo"></a>
-            <h1>{{ site.name }}</h1>
+            <div class="logo-container">
+                <a href="/">
+                    <img src="https://mobilevikings.be/static/img/logo-white.svg" alt="{{ site.name }}" class="logo mv">
+                    <img src="https://assets.ckx.be/icon-light.svg" alt="{{ site.name }}" class="logo ckx">
+                </a>
+                <h1>{{ site.name }}</h1>
+            </div>
+            <a class="theme-toggle" href="javascript:document.cookie = 'mv=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'; window.location.reload();" class="button">disable theme</a>
         </header>
         <main>
             {{ content }}

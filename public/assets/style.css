@@ -20,11 +20,32 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Poppins';
+    src: url('/assets/fonts/Poppins-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
 :root {
+    --text-color: #D8D8D8;
+    --focus-color: white;
+    --accent-color: #105c8c;
+    --success-color: #58b464;
+    --fail-color: #CD0300;
+    --accent-color-hover: #08476e;
+    --background-color: #022B4D;
+    --border-color: #163854;
+    --border-radius: 3px;
+    --font-family: "Open Sans", sans-serif;
+}
+
+body.mv {
     --text-color: #D8D8D8;
     --focus-color: white;
     --accent-color: #CD0300;
     --success-color: #5E7461;
+    --fail-color: #CD0300;
     --accent-color-hover: #A40300;
     --background-color: black;
     --border-color: #555555;
@@ -32,6 +53,64 @@
     --font-family: "Open Sans", sans-serif;
 }
 
+body.mv h1, body.mv h2, body.mv h3, body.mv h4, body.mv h5, body.mv h6 {
+    --font-family: "MrAlex-Bold", sans-serif;
+}
+
+body.mv section {
+    --background-color: #2A2A2A;
+}
+
+body.mv section button, body.mv section .button {
+    --background-color: var(--accent-color);
+    --text-color: var(--focus-color);
+}
+
+body.mv .field {
+    --background-color: #3F3F3F;
+    --border-color: #222222;
+}
+
+body.mv .field input, body.mv .field select, body.mv .player-list label {
+    --background-color: #3F3F3F;
+    --border-color: #222222;
+}
+
+body.mv .names {
+    --background-color: #2A2A2A;
+}
+
+body.mv .names .value .actions > * {
+    --background-color: #3F3F3F;
+}
+
+body.mv .player-item label:not(.disabled):hover {
+    background-color: #4a4a4a;
+}
+
+body.mv .player-item label.disabled {
+    background-image: repeating-linear-gradient(135deg,rgb(85, 85, 85),rgb(85, 85, 85) 10px,transparent 10px,transparent 20px);
+}
+
+body.mv header .logo {
+    width: 70px;
+}
+
+body.mv header .logo.ckx {
+    display: none;
+}
+
+body.mv header .logo.mv {
+    display: block;
+}
+
+body.mv .send-to-slack {
+    display: block;
+}
+
+body.mv .theme-toggle {
+    display: inline-block;
+}
 
 body, html {
     padding: 0;
@@ -79,10 +158,11 @@ body, html {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    --font-family: "MrAlex-Bold", sans-serif;
+    --font-family: "Poppins", sans-serif;
     font-family: var(--font-family);
     text-transform: uppercase;
     color: var(--focus-color);
+    font-weight: 700;
 }
 
 p, h1, h2, h3, h4, h5, h6 {
@@ -116,18 +196,36 @@ header {
     padding: 1rem 1.5rem;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 2rem;
-    margin-bottom: 1rem;
+}
+
+header .theme-toggle {
+    font-size: 12px;
+    display: none;
+}
+
+header .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
 
 header .logo {
     aspect-ratio: 1/1;
-    width: 70px;
+    width: 60px;
+}
+
+header .logo.mv {
+    display: none;
+}
+
+header .logo.ckx {
+    display: block;
 }
 
 section {
-    --background-color: #2A2A2A;
+    --background-color: #0d2132;
     padding: 1.5rem;
     background-color: var(--background-color);
     border: 1px solid var(--border-color);
@@ -218,7 +316,7 @@ section button::after, section .button::after {
 }
 
 .players .score .history .loss {
-    color: var(--accent-color);
+    color: var(--fail-color);
 }
 
 .players .score .history .gain::before {
@@ -250,8 +348,8 @@ input, select, button, textarea {
 }
 
 .field {
-    --background-color: #3F3F3F;
-    --border-color: #222222;
+    --background-color: #233d53;
+    --border-color: #355169;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -268,8 +366,8 @@ input, select, button, textarea {
 }
 
 .field input, .field select, .player-list label {
-    --background-color: #3F3F3F;
-    --border-color: #222222;
+    --background-color: #233d53;
+    --border-color: #355169;
     background-color: var(--background-color);
     outline: 1px solid var(--border-color);
     border: none;
@@ -317,10 +415,14 @@ footer {
     text-wrap-style: pretty;
 }
 
+.send-to-slack {
+    display: none;
+}
+
 /* Names page */
 
 .names {
-    --background-color: #2A2A2A;
+    --background-color: #0d2132;
     background-color: var(--background-color);
     padding: 0.5rem 1.5rem;
 }
@@ -338,7 +440,7 @@ footer {
 }
 
 .names .value .actions > * {
-    --background-color: #3F3F3F;
+    --background-color: #233d53;
     display: inline-block;
     aspect-ratio: 1/1;
     width: 30px;
@@ -397,13 +499,13 @@ td:first-child {
 
 .player-item label.disabled {
     opacity: 0.6;
-    background-image: repeating-linear-gradient(135deg,rgb(85, 85, 85),rgb(85, 85, 85) 10px,transparent 10px,transparent 20px);
+    background-image: repeating-linear-gradient(135deg, rgb(13 33 50), rgb(13 33 50) 10px, transparent 10px, transparent 20px);
     cursor: not-allowed;
     color: rgba(255, 255, 255, 0.7);
 }
 
 .player-item label:not(.disabled):hover {
-    background-color: #4a4a4a;
+    background-color: #2f4c65;
 }
 
 .player-item input[type="checkbox"] {
