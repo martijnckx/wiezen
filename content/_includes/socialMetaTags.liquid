@@ -1,11 +1,9 @@
-{%- assertIsNotEmpty site.metaTitleSuffix "Site meta title suffix (or site name) is needed for social meta tags" -%}
 {%- assertIsNotEmpty site.title "Site title is needed for social meta tags" -%}
 {%- assertIsNotEmpty site.description "Site description is needed for social meta tags" -%}
 
-{%- assign titleSuffix = ' | ' | append: site.metaTitleSuffix -%}
 {%- assign generatedShareImage = "https://image.social/get?url=" | append: site.host | append: page.url -%}
 
-{%- assign metaTitle = meta.title | default: site.title | append: titleSuffix -%}
+{%- assign metaTitle = meta.title | default: site.title -%}
 {%- assign metaDescription = meta.description | default: site.description -%}
 {%- assign metaImage = meta.image | default: site.socialShareImage | default: generatedShareImage -%}
 

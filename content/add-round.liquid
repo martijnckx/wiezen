@@ -6,6 +6,10 @@ pagination:
     alias: round
     addAllPagesToCollections: true
 permalink: /add-round/{{ round.name | slugify }}/
+eleventyComputed:
+    meta:
+        title: "Voeg een ronde {{ round.name | downcase }} toe aan je scorebord voor Wiezen"
+        description: "De punten worden automatisch berekend volgens de officiële regels van IWWA."
 ---
 
 <section>
