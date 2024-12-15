@@ -449,3 +449,7 @@ td:first-child {
 .simultaneous-round .field:not(.playing) {
     display: none;
 }
+
+.amount-of-players:not(.show) {
+    display: none;
+}
