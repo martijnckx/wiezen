@@ -52,7 +52,7 @@ layout: layouts/base
 
 <section>
     <h2>Acties</h2>
-    <button>Stuur tussenstand naar Slack</button>
+    <button onclick="sendToSlack()">Stuur tussenstand naar Slack</button>
     <a class="button" href="/names/">Pas namen aan</a>
     <button onclick="resetScores()">Reset scores</button>
 </section>
@@ -65,7 +65,7 @@ layout: layouts/base
                 <div class="name">${game.players[index].name}</div>
                 <div class="score">
                     <div class="history">
-                        ${game.players[index].history.slice(-1).map(score => `<span class="${score > 0 ? 'gain' : 'loss'}">${score}</span>`).join('')}
+                        ${game.players[index].history.slice(-1).map(score => `<span class="recent-score-change ${score > 0 ? 'gain' : score < 0 ? 'loss' : ''}">${score}</span>`).join('')}
                     </div>
                     <div class="total">${game.players[index].score}</div>
                 </div>
@@ -77,6 +77,9 @@ layout: layouts/base
             return;
         }
         game.reset();
+    }
+    function sendToSlack() {
+        alert("Coming soon ...")
     }
     window.addEventListener('load', () => {
         updateScores();

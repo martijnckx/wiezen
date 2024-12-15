@@ -181,16 +181,20 @@ section button::after, section .button::after {
     gap: 0.5rem;
     font-size: 12px;
     align-items: center;
-    color: var(--accent-color);
+    color: var(--border-color);
 }
 
-.players .score .history span {
+.players .score .history .recent-score-change {
     min-width: 3ch;
     text-align: right;
 }
 
 .players .score .history .gain {
     color: var(--success-color);
+}
+
+.players .score .history .loss {
+    color: var(--accent-color);
 }
 
 .players .score .history .gain::before {
@@ -228,6 +232,11 @@ input, select, button, textarea {
     flex-direction: column;
     gap: 0.5rem;
     position: relative;
+}
+
+.simultaneous-round.hidden, .field.hidden {
+    display: none;
+    position: absolute;
 }
 
 .field .required {
@@ -400,4 +409,14 @@ td:first-child {
 
 .player-item input[type="checkbox"]:checked + .checkbox-custom::after {
     display: block;
+}
+
+.simultaneous-round {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.simultaneous-round .field:not(.playing) {
+    display: none;
 }

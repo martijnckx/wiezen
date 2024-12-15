@@ -10,13 +10,15 @@ permalink: /add-round/{{ round.name | slugify }}/
 
 <section>
     <h2>{{ round.name}}</h2>
+    {% comment %}
     {% if round.canBePlayedSimultaneously %}
         <p class="warning">Meerdere spelers kunnen gelijktijdig {{ round.name }} spelen, maar dit kun je nog niet in 1 keer ingeven. Voeg een extra {{ round.name }} toe voor elke speler, dat klopt qua puntentelling.</p>
     {% endif %}
+    {% endcomment %}
     <div class="field">
-        <label for="names">Wie speelt er?<span class="required">*</span></label>
+        <label for="names">Wie speelde {{ round.name | downcase }}?<span class="required">*</span></label>
     </div>
-    <div class="player-list" data-players="{{ round.amountOfPlayers }}">
+    <div class="player-list" data-players="{% if round.canBePlayedSimultaneously %}4{% else %}{{ round.amountOfPlayers }}{% endif %}">
         <div class="player-item">
             <label>
                 <input type="checkbox" name="player" value="0">
@@ -54,25 +56,51 @@ permalink: /add-round/{{ round.name | slugify }}/
             {% endfor %}
         </select>
     </div>
+    <div class="simultaneous-round hidden">
+        {% for i in (0..3) %}
+            <div class="field tricks-for-player{{ i }}">
+                <label for="tricks{{ i }}">Hoeveel slagen haalde <span class="player{{-i-}}-name">Speler {{ i }}</span>?</label>
+                <select name="tricks{{ i }}" id="tricks{{ i }}">
+                    {% for i in (0..13) %}
+                        <option value="{{ i }}">{{ i }} {% if i == 1 %}slag{% else %}slagen{% endif %}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
+    </div>
     <button onclick="addRound()">Punten toevoegen</button>
 </section>
 
 <script>
+    let round;
     function addRound() {
-        const tricks = document.getElementById('tricks').value;
+        const games = [];
         const playerIds = [];
         const players = document.querySelectorAll('input[type="checkbox"]:checked');
         Array.from(players).forEach(player => playerIds.push(parseInt(player.value)));
-        const round = rounds.find(round => round.name === '{{ round.name }}');
-        game.addRound(round.calculator, {
-            attackers: playerIds,
-            tricks: tricks,
-        });
+
+        if (round.canBePlayedSimultaneously && playerIds.length > 1) {
+            for (const playerId of playerIds) {
+                const tricks = parseInt(document.getElementById(`tricks${playerId}`).value);
+                games.push({
+                    attackers: [playerId],
+                    tricks: tricks,
+                });
+            }
+        } else {
+            const tricks = parseInt(document.getElementById('tricks').value);
+            games.push({
+                attackers: playerIds,
+                tricks: tricks,
+            });
+        }
+        game.addRound(round.calculator, ...games);
         document.location = '/';
     }
     function updateNames() {
         for (let i = 0; i < game.players.length; i++) {
             document.getElementById(`player${i}`).innerText = game.players[i].name;
+            document.querySelectorAll(`.player${i}-name`).forEach(name => name.innerText = game.players[i].name);
         }
     }
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -81,11 +109,25 @@ permalink: /add-round/{{ round.name | slugify }}/
             const selectedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
             const maxPlayers = parseInt(document.querySelector('.player-list').dataset.players);
 
-            if (selectedCount === 0 && maxPlayers === 1) {
+            if (selectedCount > round.amountOfPlayers) {
+                document.querySelector('.simultaneous-round').classList.remove('hidden');
+                document.querySelector('.field:has(#tricks)').classList.add('hidden');
+            } else {
+                document.querySelector('.simultaneous-round').classList.add('hidden');
+                document.querySelector('.field:has(#tricks)').classList.remove('hidden');
+            }
+
+            if (selectedCount === 0 && round.amountOfPlayers === 1) {
                 const nameSpan = document.getElementById('name');
                 if (nameSpan) {
                     nameSpan.innerText = 'de speler';
                 }
+            }
+
+            if (this.checked) {
+                document.querySelector(`.tricks-for-player${this.value}`).classList.add('playing');
+            } else {
+                document.querySelector(`.tricks-for-player${this.value}`).classList.remove('playing');
             }
 
             if (!this.checked && selectedCount >= maxPlayers) {
@@ -96,7 +138,7 @@ permalink: /add-round/{{ round.name | slugify }}/
 
             // Enable/disable checkboxes based on selection count
             checkboxes.forEach(cb => {
-                if (cb.checked && maxPlayers === 1) {
+                if (cb.checked && round.amountOfPlayers === 1) {
                     const nameSpan = document.getElementById('name');
                     if (nameSpan) {
                         nameSpan.innerText = game.players[cb.value].name;
@@ -115,5 +157,7 @@ permalink: /add-round/{{ round.name | slugify }}/
     window.addEventListener('load', () => {
         updateNames();
         game.onChange(updateNames);
+
+        round = rounds.find(round => round.name === '{{ round.name }}');
     });
 </script>
