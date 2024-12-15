@@ -209,6 +209,18 @@ input, select, button, textarea {
     appearance: none;
 }
 
+.warning {
+    box-sizing: border-box;
+    display: flex;
+    font-size: 14px;
+    color: var(--text-color);
+    background: #af800e;
+    padding: 1rem 1.5rem;
+    border-radius: 3px;
+    font-weight: 500;
+    box-shadow:0 10px 20px rgba(0,0,0,.3);
+}
+
 .field {
     --background-color: #3F3F3F;
     --border-color: #222222;

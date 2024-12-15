@@ -10,6 +10,9 @@ permalink: /add-round/{{ round.name | slugify }}/
 
 <section>
     <h2>{{ round.name}}</h2>
+    {% if round.canBePlayedSimultaneously %}
+        <p class="warning">Meerdere spelers kunnen gelijktijdig {{ round.name }} spelen, maar dit kun je nog niet in 1 keer ingeven. Voeg een extra {{ round.name }} toe voor elke speler, dat klopt qua puntentelling.</p>
+    {% endif %}
     <div class="field">
         <label for="names">Wie speelt er?<span class="required">*</span></label>
     </div>
@@ -51,10 +54,22 @@ permalink: /add-round/{{ round.name | slugify }}/
             {% endfor %}
         </select>
     </div>
-    <button>Punten toevoegen</button>
+    <button onclick="addRound()">Punten toevoegen</button>
 </section>
 
 <script>
+    function addRound() {
+        const tricks = document.getElementById('tricks').value;
+        const playerIds = [];
+        const players = document.querySelectorAll('input[type="checkbox"]:checked');
+        Array.from(players).forEach(player => playerIds.push(parseInt(player.value)));
+        const round = rounds.find(round => round.name === '{{ round.name }}');
+        game.addRound(round.calculator, {
+            attackers: playerIds,
+            tricks: tricks,
+        });
+        document.location = '/';
+    }
     function updateNames() {
         for (let i = 0; i < game.players.length; i++) {
             document.getElementById(`player${i}`).innerText = game.players[i].name;
