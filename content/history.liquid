@@ -4,7 +4,7 @@ layout: layouts/base
 
 <section>
     <h2>Grafiek</h2>
-    <p>Coming soon &hellip;</p>
+    <canvas id="history-chart"></canvas>
 </section>
 
 <section>
@@ -34,11 +34,33 @@ layout: layouts/base
     <button onclick="game.removeLastRound()">Verwijder meest recente spel</button>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    const ctx = document.getElementById('history-chart');
+    let chart;
+
+    function updateUi() {
+        updateTable();
+        updateChart();
+    }
+
+    function updateChart() {
+        chart.data.labels = game.rounds.length > 0 ? ['Start'].concat(game.rounds) : [];
+        chart.data.datasets = game.players.map((player, index) => {
+            return {
+                label: player.name,
+                data: player.history.length > 0 ? [0].concat(player.history.map((round, index) => player.history.slice(0, index + 1).reduce((total, round) => total + round, 0))) : [],
+                borderColor: ['#CD0300', '#00a5db', '#08cb5f', '#f1e02f'][index],
+            };
+        });
+        chart.update();
+    }
+    
     function totalInRound(roundNumber, history) {
         return history.slice(roundNumber).reduce((total, round) => total + round, 0);
     }
     function updateTable() {
+        console.log("Updating table");
         const tableElement = document.querySelector('table');
             tableElement.innerHTML = `<thead>
                 <tr>
@@ -68,7 +90,31 @@ layout: layouts/base
             </tbody>`;
     }
     window.addEventListener('load', () => {
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: game.rounds.length > 0 ? ['Start'].concat(game.rounds) : [],
+                datasets: game.players.map((player, index) => {
+                    return {
+                        label: player.name,
+                        data: player.history.length > 0 ? [0].concat(player.history.map((round, index) => player.history.slice(0, index + 1).reduce((total, round) => total + round, 0))) : [],
+                        borderColor: ['#CD0300', '#00a5db', '#08cb5f', '#f1e02f'][index],
+                    };
+                }),
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                title: {
+                    display: false,
+                }
+                }
+            },
+        });
         updateTable();
-        game.onChange(updateTable);
+        game.onChange(updateUi);
     });
 </script>
