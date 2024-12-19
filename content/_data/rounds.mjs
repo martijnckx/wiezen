@@ -141,7 +141,6 @@ class Troel extends Round {
             failurePenalty: -6,
             extraTrickBonus: 2,
             missingTrickPenalty: -2,
-            pointsShouldBeDivided: true,
             bonusForAllTricks: true,
         });
     }
@@ -157,7 +156,6 @@ class Troela extends Round {
             failurePenalty: -6,
             extraTrickBonus: 2,
             missingTrickPenalty: -2,
-            pointsShouldBeDivided: true,
             bonusForAllTricks: true,
         });
     }
