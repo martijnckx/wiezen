@@ -6,7 +6,6 @@ class Round {
     #failurePenalty;
     #extraTrickBonus;
     #missingTrickPenalty;
-    #pointsShouldBeDivided;
     #canBePlayedSimultaneously;
     #bonusForAllTricks;
 
@@ -18,7 +17,6 @@ class Round {
         failurePenalty,
         extraTrickBonus = 0,
         missingTrickPenalty = 0,
-        pointsShouldBeDivided = false,
         canBePlayedSimultaneously = false,
         bonusForAllTricks = false,
     }) {
@@ -33,7 +31,6 @@ class Round {
         this.#failurePenalty = failurePenalty;
         this.#extraTrickBonus = extraTrickBonus;
         this.#missingTrickPenalty = missingTrickPenalty;
-        this.#pointsShouldBeDivided = pointsShouldBeDivided;
         this.#canBePlayedSimultaneously = canBePlayedSimultaneously;
         this.#bonusForAllTricks = bonusForAllTricks;
     }
@@ -52,7 +49,7 @@ class Round {
     }
 
     pointsForDefenders(tricks) {
-        return this.pointsForAttackers(tricks) * -1 / (this.#pointsShouldBeDivided ? (4 - this.#amountOfPlayers) : 1);
+        return this.pointsForAttackers(tricks) * -1 / (this.#amountOfPlayers === 1 ? 4 - this.#amountOfPlayers : 1);
     }
 }
 
@@ -66,7 +63,6 @@ class Alleen extends Round {
             failurePenalty: -12,
             extraTrickBonus: 3,
             missingTrickPenalty: -6,
-            pointsShouldBeDivided: true,
             bonusForAllTricks: true,
         });
     }
@@ -96,7 +92,6 @@ class Abondance extends Round {
                 tricksForSuccess: 9,
                 successScore: 15,
                 failurePenalty: -15,
-                pointsShouldBeDivided: true,
             });
         } else if (target === 10) {
             super({
@@ -105,7 +100,6 @@ class Abondance extends Round {
                 tricksForSuccess: 10,
                 successScore: 18,
                 failurePenalty: -18,
-                pointsShouldBeDivided: true,
             });
         } else if (target === 11) {
             super({
@@ -114,7 +108,6 @@ class Abondance extends Round {
                 tricksForSuccess: 11,
                 successScore: 24,
                 failurePenalty: -24,
-                pointsShouldBeDivided: true,
             });
         } else if (target === 12) {
             super({
@@ -123,7 +116,6 @@ class Abondance extends Round {
                 tricksForSuccess: 12,
                 successScore: 27,
                 failurePenalty: -27,
-                pointsShouldBeDivided: true,
             });
         } else {
             throw new Error('Invalid target for Abondance');
@@ -169,7 +161,6 @@ class Solo extends Round {
             tricksForSuccess: 13,
             successScore: 75,
             failurePenalty: -75,
-            pointsShouldBeDivided: true,
         });
     }
 }
@@ -182,7 +173,6 @@ class SoloSlim extends Round {
             tricksForSuccess: 13,
             successScore: 90,
             failurePenalty: -90,
-            pointsShouldBeDivided: true,
         });
     }
 }
@@ -199,7 +189,6 @@ class Misery extends Round {
             tricksForSuccess: 0,
             successScore: 0,
             failurePenalty: 0,
-            pointsShouldBeDivided: true,
             canBePlayedSimultaneously: true,
         });
     }
@@ -221,7 +210,6 @@ class OpenMisery extends Round {
             tricksForSuccess: 0,
             successScore: 0,
             failurePenalty: 0,
-            pointsShouldBeDivided: true,
             canBePlayedSimultaneously: true,
         });
     }
