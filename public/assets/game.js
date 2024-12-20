@@ -100,13 +100,13 @@ class Game {
 
     if (simultaneousResults.length === 1) {
       const result = simultaneousResults[0];
-      if (result.attackers.length !== round.amountOfPlayers) {
-        throw new Error(`${round.name} needs exactly ${round.amountOfPlayers} attackers`);
+      if (result.attackers.length !== round.amountOfAttackers) {
+        throw new Error(`${round.name} needs exactly ${round.amountOfAttackers} attackers`);
       }
       for (let playerIndex = 0; playerIndex < this.players.length; playerIndex++) {
         const score = result.attackers.includes(playerIndex) ?
-          round.pointsForAttackers(result.tricks) :
-          round.pointsForDefenders(result.tricks);
+          round.pointsForAttacker(result.tricks) :
+          round.pointsForDefender(result.tricks);
         this.players[playerIndex].addScore(score);
       }
       this.#rounds.push(round.name);

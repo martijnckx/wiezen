@@ -14,11 +14,11 @@ eleventyComputed:
 
 <section>
     <h2>{{ round.name}}</h2>
-    <p class="warning amount-of-players">{{ round.name }} wordt met {{ round.amountOfPlayers }} gespeeld. Duid alle spelers aan die deze ronde hebben gespeeld.</p>
+    <p class="warning amount-of-players">{{ round.name }} wordt met {{ round.amountOfAttackers }} gespeeld. Duid alle spelers aan die deze ronde hebben gespeeld.</p>
     <div class="field">
         <label for="names">Wie speelde {{ round.name | downcase }}?<span class="required">*</span></label>
     </div>
-    <div class="player-list" data-players="{% if round.canBePlayedSimultaneously %}4{% else %}{{ round.amountOfPlayers }}{% endif %}">
+    <div class="player-list" data-players="{% if round.canBePlayedSimultaneously %}4{% else %}{{ round.amountOfAttackers }}{% endif %}">
         <div class="player-item">
             <label>
                 <input type="checkbox" name="player" value="0">
@@ -49,7 +49,7 @@ eleventyComputed:
         </div>
     </div>
     <div class="field">
-        <label for="tricks">Hoeveel slagen haalde{% if round.amountOfPlayers > 1 %}n ze{% else %} <span id="name">de speler</span>{% endif %}?</label>
+        <label for="tricks">Hoeveel slagen haalde{% if round.amountOfAttackers > 1 %}n ze{% else %} <span id="name">de speler</span>{% endif %}?</label>
         <select name="tricks" id="tricks">
             {% for i in (0..13) %}
                 <option value="{{ i }}">{{ i }} {% if i == 1 %}slag{% else %}slagen{% endif %}</option>
@@ -79,7 +79,7 @@ eleventyComputed:
         const players = document.querySelectorAll('input[type="checkbox"]:checked');
         Array.from(players).forEach(player => playerIds.push(parseInt(player.value)));
 
-        if (playerIds.length < round.amountOfPlayers) {
+        if (playerIds.length < round.amountOfAttackers) {
             document.querySelector('.amount-of-players').classList.add('show');
             return;
         }
@@ -114,7 +114,7 @@ eleventyComputed:
             const selectedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
             const maxPlayers = parseInt(document.querySelector('.player-list').dataset.players);
 
-            if (selectedCount > round.amountOfPlayers) {
+            if (selectedCount > round.amountOfAttackers) {
                 document.querySelector('.simultaneous-round').classList.remove('hidden');
                 document.querySelector('.field:has(#tricks)').classList.add('hidden');
             } else {
@@ -122,7 +122,7 @@ eleventyComputed:
                 document.querySelector('.field:has(#tricks)').classList.remove('hidden');
             }
 
-            if (selectedCount === 0 && round.amountOfPlayers === 1) {
+            if (selectedCount === 0 && round.amountOfAttackers === 1) {
                 const nameSpan = document.getElementById('name');
                 if (nameSpan) {
                     nameSpan.innerText = 'de speler';
@@ -143,7 +143,7 @@ eleventyComputed:
 
             // Enable/disable checkboxes based on selection count
             checkboxes.forEach(cb => {
-                if (cb.checked && round.amountOfPlayers === 1) {
+                if (cb.checked && round.amountOfAttackers === 1) {
                     const nameSpan = document.getElementById('name');
                     if (nameSpan) {
                         nameSpan.innerText = game.players[cb.value].name;
