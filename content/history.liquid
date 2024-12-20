@@ -48,7 +48,7 @@ meta:
     }
 
     function updateChart() {
-        chart.data.labels = game.rounds.length > 0 ? ['Start'].concat(game.rounds) : [];
+        chart.data.labels = game.rounds.length > 0 ? game.rounds.concat(['Tussenstand']) : [];
         chart.data.datasets = game.players.map((player, index) => {
             return {
                 label: player.name,
@@ -96,7 +96,7 @@ meta:
         chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: game.rounds.length > 0 ? ['Start'].concat(game.rounds) : [],
+                labels: game.rounds.length > 0 ? game.rounds.concat(['Tussenstand']) : [],
                 datasets: game.players.map((player, index) => {
                     return {
                         label: player.name,
