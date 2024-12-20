@@ -468,12 +468,46 @@ tbody tr {
 }
 
 th, td {
-    text-align: center;
     padding: 0.5rem 0;
+}
+
+th {
+    text-align: center;
 }
 
 td:first-child {
     font-size: 12px;
+}
+
+td {
+    text-align: right;
+}
+
+td .score-change {
+    font-size: 12px;
+    margin-left: 0.5rem;
+    width: 4ch;
+    display: inline-block;
+}
+
+td .score-change.gain {
+    color: var(--success-color);
+}
+
+td .score-change.gain::before, td .score-change.loss::before {
+    content: "(";
+}
+
+td .score-change.gain::after, td .score-change.loss::after {
+    content: ")";
+}
+
+td .score-change.gain::before {
+    content: "(+";
+}
+
+td .score-change.loss {
+    color: var(--fail-color);
 }
 
 /* round pages */

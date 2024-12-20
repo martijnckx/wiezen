@@ -59,9 +59,6 @@ meta:
         chart.update();
     }
     
-    function totalInRound(roundNumber, history) {
-        return history.slice(roundNumber).reduce((total, round) => total + round, 0);
-    }
     function updateTable() {
         console.log("Updating table");
         const tableElement = document.querySelector('table');
@@ -75,12 +72,12 @@ meta:
                 </tr>
             </thead>
             <tbody>
-                ${game.rounds.length > 0 ? game.rounds.slice().reverse().map((round, index) => `<tr>
+                ${game.rounds.length > 0 ? game.rounds.slice().map((round, index) => `<tr>
                     <td>${round}</td>
-                    <td>${totalInRound(index, game.players[0].history.slice().reverse())}</td>
-                    <td>${totalInRound(index, game.players[1].history.slice().reverse())}</td>
-                    <td>${totalInRound(index, game.players[2].history.slice().reverse())}</td>
-                    <td>${totalInRound(index, game.players[3].history.slice().reverse())}</td>
+                    <td>${game.players[0].history.slice(0, index + 1).reduce((total, round) => total + round, 0)} <span class="score-change ${game.players[0].history[index] > 0 ? 'gain' : 'loss'}">${game.players[0].history[index]}</span></td>
+                    <td>${game.players[1].history.slice(0, index + 1).reduce((total, round) => total + round, 0)} <span class="score-change ${game.players[1].history[index] > 0 ? 'gain' : 'loss'}">${game.players[1].history[index]}</span></td>
+                    <td>${game.players[2].history.slice(0, index + 1).reduce((total, round) => total + round, 0)} <span class="score-change ${game.players[2].history[index] > 0 ? 'gain' : 'loss'}">${game.players[2].history[index]}</span></td>
+                    <td>${game.players[3].history.slice(0, index + 1).reduce((total, round) => total + round, 0)} <span class="score-change ${game.players[3].history[index] > 0 ? 'gain' : 'loss'}">${game.players[3].history[index]}</span></td>
                 </tr>`).join('') : `
                     <tr>
                         <td></td>
