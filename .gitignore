@@ -27,7 +27,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Files for toolign
+# Files for tooling
 .wrangler
 node_modules/*
 _site
