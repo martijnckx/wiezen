@@ -6,8 +6,4 @@
 
 ## TEAM
 
-This website was built by [CKX](https://ckx.be). The team includes:
-
-- [Martijn Luyckx](https://martijnluyckx.be/)
-- [Marlies Hendrickx](https://woordevol.be/)
-- [Robbe Luyckx](https://robbeluyckx.be/)
+This website was built by [Martijn Luyckx](https://martijnluyckx.be) from [CKX](https://ckx.be).

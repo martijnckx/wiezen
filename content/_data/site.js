@@ -6,8 +6,8 @@ export default function () {
         "description": process.env.SITE_META_DESCRIPTION || "",
         "socialShareImage": process.env.SITE_SOCIAL_SHARE_IMAGE_URL || "",
         "author": {
-            "name": "CKX",
-            "url": "https://ckx.be",
+            "name": "Martijn Luyckx",
+            "url": "https://martijnluyckx.be",
             "email": "martijn@ckx.be"
         },
         "host": process.env.SITE_HOSTNAME || "",
