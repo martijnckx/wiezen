@@ -234,7 +234,7 @@ section {
     gap: 1rem;
 }
 
-section button, section .button {
+section button, section .button, .not-found button {
     --background-color: var(--accent-color);
     --text-color: var(--focus-color);
 
@@ -254,11 +254,11 @@ section button, section .button {
     text-decoration: none;
 }
 
-section button:hover, section .button:hover {
+section button:hover, section .button:hover, .not-found button:hover {
     background-color: var(--accent-color-hover);
 }
 
-section button::after, section .button::after {
+section button::after, section .button::after, .not-found button::after {
     content: "";
     background-image: url("/assets/icons/arrow-right.svg");
     background-size: contain;
@@ -588,4 +588,13 @@ td .score-change.loss {
 
 .amount-of-players:not(.show) {
     display: none;
+}
+
+/* 404 page */
+
+.not-found {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
 }
